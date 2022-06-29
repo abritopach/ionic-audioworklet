@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WorkerUrl } from 'worker-url';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,14 @@ export class AudioProcessorService {
       }
     }
     try {
-      this.processorNode = new AudioWorkletNode(this.audioContext, 'audio-processor');
+      this.processorNode = new AudioWorkletNode(this.audioContext, 'my-audio-processor');
     } catch(e) {
       try {
-        await this.audioContext.audioWorklet.addModule('worklet/audio-processor.worklet.ts');
-        this.processorNode = new AudioWorkletNode(this.audioContext, 'audio-processor');
+        const workletUrl = new WorkerUrl(new URL('../worklet/audio-processor.worklet.ts', import.meta.url), {
+          name: 'worklet',
+        });
+        await this.audioContext.audioWorklet.addModule(workletUrl);
+        this.processorNode = new AudioWorkletNode(this.audioContext, 'my-audio-processor');
       } catch(error) {
         console.error(`** Error: Unable to create worklet node: ${e}`);
         return null;
