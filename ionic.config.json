@@ -1,0 +1,7 @@
+{
+  "name": "ionic-audioworklet",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
