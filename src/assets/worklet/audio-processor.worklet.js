@@ -8,6 +8,6 @@ class MyAudioProcessor extends AudioWorkletProcessor {
         into each of the outputs */
         return true;
     }
-};
+}
 
 registerProcessor('my-audio-processor', MyAudioProcessor);
