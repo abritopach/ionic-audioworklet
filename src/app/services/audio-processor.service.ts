@@ -63,6 +63,7 @@ export class AudioProcessorService {
 
   async toggleSound() {
     if (!this.audioContext) {
+      console.log('toggleSound audio demo start');
       this.audioDemoStart();
     } else {
       await this.audioContext.close();

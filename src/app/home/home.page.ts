@@ -12,4 +12,8 @@ export class HomePage {
     this.audioProcessorService.createMyAudioProcessor();
   }
 
+  toggleSound() {
+    this.audioProcessorService.toggleSound();
+  }
+
 }
