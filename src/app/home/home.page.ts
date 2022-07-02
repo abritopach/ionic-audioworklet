@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RangeCustomEvent } from '@ionic/angular';
 import { AudioProcessorService } from '../services/audio-processor.service';
 
 @Component({
@@ -12,6 +13,18 @@ export class HomePage {
 
   toggleSound() {
     this.audioProcessorService.toggleSound();
+  }
+
+  pinFormatter(value: number) {
+    return `${value}`;
+  }
+
+  onOscillatorGainChange(ev: Event) {
+    console.log('onOscillatorGainChange', (ev as RangeCustomEvent).detail.value);
+  }
+
+  onHissGainChange(ev: Event) {
+    console.log('onOscillatorGainChange', (ev as RangeCustomEvent).detail.value);
   }
 
 }
