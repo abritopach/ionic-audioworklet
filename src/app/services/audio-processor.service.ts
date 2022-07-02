@@ -31,14 +31,17 @@ export class AudioProcessorService {
         });
         await this.audioContext.audioWorklet.addModule(workletUrl);
         */
+        console.log('adding...');
         await this.audioContext.audioWorklet.addModule('assets/worklet/audio-processor.worklet.js');
         this.processorNode = new AudioWorkletNode(this.audioContext, 'my-audio-processor');
+        console.log('processorNode', this.processorNode);
       } catch(error) {
         console.error(`** Error: Unable to create worklet node: ${e}`);
         return null;
       }
     }
     await this.audioContext.resume();
+    console.log('after audioContext resume');
     return this.processorNode;
   }
 

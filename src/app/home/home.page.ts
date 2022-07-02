@@ -8,9 +8,7 @@ import { AudioProcessorService } from '../services/audio-processor.service';
 })
 export class HomePage {
 
-  constructor(private audioProcessorService: AudioProcessorService) {
-    this.audioProcessorService.createMyAudioProcessor();
-  }
+  constructor(private audioProcessorService: AudioProcessorService) {}
 
   toggleSound() {
     this.audioProcessorService.toggleSound();
