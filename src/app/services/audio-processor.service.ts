@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { WorkerUrl } from 'worker-url';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,8 @@ export class AudioProcessorService {
 
   audioContext: AudioContext = null;
   processorNode: AudioWorkletNode;
-  oscGainRange;
+  gainNode: GainNode;
+  hissGainParam: AudioParam;
 
   constructor() { }
 
@@ -25,12 +25,6 @@ export class AudioProcessorService {
       this.processorNode = new AudioWorkletNode(this.audioContext, 'my-audio-processor');
     } catch(e) {
       try {
-        /*
-        const workletUrl = new WorkerUrl(new URL('assets/worklet/audio-processor.worklet.ts', import.meta.url), {
-          name: 'worklet',
-        });
-        await this.audioContext.audioWorklet.addModule(workletUrl);
-        */
         console.log('adding...');
         await this.audioContext.audioWorklet.addModule('assets/worklet/audio-processor.worklet.js');
         this.processorNode = new AudioWorkletNode(this.audioContext, 'my-audio-processor');
@@ -52,16 +46,23 @@ export class AudioProcessorService {
       return;
     }
     const soundSource = new OscillatorNode(this.audioContext);
-    const gainNode = this.audioContext.createGain();
+    this.gainNode = this.audioContext.createGain();
 
     // Configure the oscillator node
     soundSource.type = 'square';
     soundSource.frequency.setValueAtTime(440, this.audioContext.currentTime); // (A4)
     // Configure the gain for the oscillator
-    gainNode.gain.setValueAtTime(0.5, this.audioContext.currentTime);
+    this.gainNode.gain.setValueAtTime(0.5, this.audioContext.currentTime);
     // Connect and start
-    soundSource.connect(gainNode).connect(audioProcessorNode).connect(this.audioContext.destination);
+    soundSource.connect(this.gainNode).connect(audioProcessorNode).connect(this.audioContext.destination);
     soundSource.start();
+
+    // Get access to the worklet's gain parameter
+    audioProcessorNode.parameters.forEach(param => {
+      console.log('audioProcessorNode.parameter', param.value);
+    });
+    // this.hissGainParam = audioProcessorNode.parameters.get('gain');
+    // this.hissGainParam.setValueAtTime(0.2, this.audioContext.currentTime);
   }
 
   async toggleSound() {
@@ -72,6 +73,14 @@ export class AudioProcessorService {
       await this.audioContext.close();
       this.audioContext = null;
     }
+  }
+
+  updateHissGain(hissGainValue: number) {
+    this.hissGainParam.setValueAtTime(hissGainValue, this.audioContext.currentTime);
+  }
+
+  updateOscGain(oscGainValue: number) {
+    this.gainNode.gain.setValueAtTime(oscGainValue, this.audioContext.currentTime);
   }
 
 }

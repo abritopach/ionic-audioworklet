@@ -9,6 +9,7 @@ import { AudioProcessorService } from '../services/audio-processor.service';
 })
 export class HomePage {
 
+
   constructor(private audioProcessorService: AudioProcessorService) {}
 
   toggleSound() {
@@ -21,10 +22,12 @@ export class HomePage {
 
   onOscillatorGainChange(ev: Event) {
     console.log('onOscillatorGainChange', (ev as RangeCustomEvent).detail.value);
+    this.audioProcessorService.updateOscGain(+(ev as RangeCustomEvent).detail.value);
   }
 
   onHissGainChange(ev: Event) {
-    console.log('onOscillatorGainChange', (ev as RangeCustomEvent).detail.value);
+    console.log('onHissGainChange', (ev as RangeCustomEvent).detail.value);
+    this.audioProcessorService.updateHissGain(+(ev as RangeCustomEvent).detail.value);
   }
 
 }
