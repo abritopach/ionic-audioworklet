@@ -6,7 +6,7 @@ class MyAudioProcessor extends AudioWorkletProcessor {
     static get parameterDescriptors() {
         return [
             {
-                name: "gain",
+                name: 'gain',
                 defaultValue: 0.2,
                 minValue: 0,
                 maxValue: 1
@@ -35,20 +35,20 @@ class MyAudioProcessor extends AudioWorkletProcessor {
         const sourceLimit = Math.min(inputList.length, outputList.length);
 
         for (let inputNum = 0; inputNum < sourceLimit; inputNum++) {
-            let input = inputList[inputNum];
-            let output = outputList[inputNum];
-            let channelCount = Math.min(input.length, output.length);
+            const input = inputList[inputNum];
+            const output = outputList[inputNum];
+            const channelCount = Math.min(input.length, output.length);
 
             // The input list and output list are each arrays of
             // Float32Array objects, each of which contains the
             // samples for one channel.
 
             for (let channel = 0; channel < channelCount; channel++) {
-                let sampleCount = input[channel].length;
+                const sampleCount = input[channel].length;
 
                 for (let i = 0; i < sampleCount; i++) {
                     let sample = input[channel][i];
-                    let rnd = 2 * (Math.random() - 0.5); // Range: -1 to 1
+                    const rnd = 2 * (Math.random() - 0.5); // Range: -1 to 1
 
                     sample = sample + (rnd * gain);
 
