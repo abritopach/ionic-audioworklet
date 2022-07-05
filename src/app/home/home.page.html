@@ -14,15 +14,21 @@
   </ion-header>
 
   <div id="container">
-    <strong>AudioWorklet Demo</strong>
-    <p>This page is a demo for the AudioWorklet API, which lets you process audio in the background using a worklet.</p>
-    <ion-button shape="round" (click)="toggleSound()">Toggle sound</ion-button>
-    <br>
-    <ion-label>Oscillator gain</ion-label>
-    <ion-range [pin]="true" [pinFormatter]="pinFormatter" min="0.0" max="1.0" step="0.05"
-    (ionChange)="onOscillatorGainChange($event)"></ion-range>
-    <ion-label>Hiss gain</ion-label>
-    <ion-range [pin]="true" [pinFormatter]="pinFormatter" min="0.0" max="1.0" step="0.05"
-    (ionChange)="onHissGainChange($event)"></ion-range>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>AudioWorklet Demo</ion-card-title>
+        <ion-card-subtitle>This page is a demo for the AudioWorklet API, which lets you process audio in the background using a worklet.</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button shape="round" (click)="toggleSound()">Toggle sound</ion-button>
+        <br><br>
+        <ion-label>Oscillator gain</ion-label>
+        <ion-range [pin]="true" [pinFormatter]="pinFormatter" min="0.0" max="1.0" step="0.05"
+        (ionChange)="onOscillatorGainChange($event)"></ion-range>
+        <ion-label>Hiss gain</ion-label>
+        <ion-range [pin]="true" [pinFormatter]="pinFormatter" min="0.0" max="1.0" step="0.05"
+        (ionChange)="onHissGainChange($event)"></ion-range>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

@@ -48,16 +48,16 @@ export class AudioProcessorService {
     const soundSource = new OscillatorNode(this.audioContext);
     this.gainNode = this.audioContext.createGain();
 
-    // Configure the oscillator node
+    // Configure the oscillator node.
     soundSource.type = 'square';
     soundSource.frequency.setValueAtTime(440, this.audioContext.currentTime); // (A4)
-    // Configure the gain for the oscillator
+    // Configure the gain for the oscillator.
     this.gainNode.gain.setValueAtTime(0.5, this.audioContext.currentTime);
-    // Connect and start
+    // Connect and start.
     soundSource.connect(this.gainNode).connect(audioProcessorNode).connect(this.audioContext.destination);
     soundSource.start();
 
-    // Get access to the worklet's gain parameter
+    // Get access to the worklet's gain parameter.
     audioProcessorNode.parameters.forEach(param => {
       console.log('audioProcessorNode.parameter', param.value);
     });
